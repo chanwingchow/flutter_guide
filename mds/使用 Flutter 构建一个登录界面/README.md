@@ -45,7 +45,7 @@ demo
 我们可以指挥这些方块站在合适的位置，戴上合适的装饰，来组成我们想要的界面。
 
 <p align="center">
-    <img width="50%" src="1.1.png" alt="1.1" />
+    <img width="50%" src="1.png" alt="1" />
 </p>
 
 
@@ -211,7 +211,7 @@ class App extends StatelessWidget {
 
 在继承时，可以只写出继承，此时该类会被标记为红色，我们可以利用该修复快速生成重写模板。
 
-<img width="70%" src="1.2.png" alt="1.2" />
+<img width="70%" src="2.png" alt="2" />
 
 我们再给 `MaterialApp` 传一些参数，例如 `title`、`colorScheme`。
 前面提到了 `ThemeData` 的 `useMaterial3` 默认是开启的，所以就不用多此一举了。
@@ -286,7 +286,7 @@ class _HomePageState extends State<HomePage> {
 
 现在需要向 `_HomePageState` 的 `build` 函数里的 `Scaffold` 中添加内容。照着先前的原型图，可以先简单地将页面搭建起来。
 
-<img width="90%" src="1.3.png" alt="1.3" />
+<img width="90%" src="3.png" alt="3" />
 
 
 #### 1. 确定页面整体走向
@@ -316,7 +316,7 @@ class _HomePageState extends State<HomePage> {
 #### 2. 添加 Logo
 我们先到网上随便找一张图片，右键点击**复制图像链接**。
 
-<img width="90%" src="1.4.png" alt="1.4" />
+<img width="90%" src="4.png" alt="4" />
 
 接着在 `children` 数组中添加一个 `Image.network` 的图片组件，它会加载网络链接的图片并显示。
 这里将复制的链接作为第一个参数，接着调节一下宽高 `width` 和 `height`。
@@ -383,7 +383,7 @@ class _HomePageState extends State<HomePage> {
 
 `child` 是按钮中的内容，理论上你可以放任何组件，一般我们放一个文本 `Text`。
 
-<img src="1.5.png" alt="1.5" />
+<img src="5.png" alt="5" />
 
 
 ```dart
@@ -424,7 +424,7 @@ class _HomePageState extends State<HomePage> {
 ### （四）美化界面
 经过上面的步骤后，你的界面大致是这样的：
 
-<img width="40%" src="1.6.png" alt="1.6" />
+<img width="40%" src="6.png" alt="6" />
 
 我们需要调一下各个组件的边距，让它们看起来不那么挤。
 
@@ -531,4 +531,4 @@ class _HomePageState extends State<HomePage> {
 }
 ```
 
-<img width="40%" src="1.7.png" alt="1.7" />
+<img width="40%" src="7.png" alt="7" />
