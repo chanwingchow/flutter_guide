@@ -97,7 +97,7 @@ class MyApp extends StatelessWidget {
 // 定义 MyHomePage 继承自 StatefulWidget（有状态组件，就是其中有一些会跟随着用户操作而改变的组件状态值）
 class MyHomePage extends StatefulWidget {
   // 这里还是一个构造函数
-  // 这里 title 加了 required 表示该参数必须
+  // 这里 title 加了 required 表示该参数在调用时必须传入
   const MyHomePage({super.key, required this.title});
   
   // 这里定义了一个 String 类型的成员变量
@@ -114,10 +114,10 @@ class MyHomePage extends StatefulWidget {
 // 定义 MyHomePage 的状态，继承自 State<T>，T 继承自 StatefulWidget，表明该状态所属的组件
 // 此处 MyHomePageState 前加了 _，表示该类在文件外部不可见
 class _MyHomePageState extends State<MyHomePage> {
-  // 这里也是同理不可见
+  // 这里也是不可见，但是是在类之外不可见
   int _counter = 0;
 
-  // 此方法用于让 _counter 加 1
+  // 此方法用于让 _counter 加 1，该方法也类外不可见
   void _incrementCounter() {
     // 调用 setState让组件状态改变，如果直接让 _counter + 1 界面上不会更新 _counter 的值
     // 传入的参数是一个返回值为 void（无返回值）的函数
