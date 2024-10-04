@@ -179,7 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 ## 四、编写代码
 我打算另起炉灶，新建一个 [login.dart](../../demo/lib/login.dart)。
-你可以把 `main.dart` 中的文件清空，跟着我一起来。
+你可以把 `main.dart` 中的内容清空，跟着我一起来。
 
 
 ### （一）定义 App 类
@@ -213,7 +213,7 @@ class App extends StatelessWidget {
 
 <img width="70%" src="2.png" alt="2" />
 
-我们再给 `MaterialApp` 传一些参数，例如 `title`、`colorScheme`。
+我们再给 `MaterialApp` 传一些参数，例如 `title`、`theme`。
 前面提到了 `ThemeData` 的 `useMaterial3` 默认是开启的，所以就不用多此一举了。
 
 ```dart
