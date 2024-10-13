@@ -2,7 +2,7 @@
 
 > [login.dart](../../demo/lib/pages/login.dart)
 > 
-> 最后编辑时间：2024.10.13 16:22
+> 最后编辑时间：2024.10.13 18:38
 > 
 > ![img.png](12.png)
 
@@ -170,7 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      // 右小角悬浮按钮
+      // 右下角悬浮按钮
       floatingActionButton: FloatingActionButton(
         // 按钮点击事件
         onPressed: _incrementCounter,
@@ -614,6 +614,10 @@ Widget _textField({
   );
 }
 ```
+
+> **注意**
+> 
+> 此处并没有按照要求给 `TextField` 添加 `label`，因为在背景图的印象下加了 `label` 并不好看，所以使用了图标来做标识。
 
 然后在调用处传入参数：
 
