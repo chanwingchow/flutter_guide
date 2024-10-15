@@ -1,8 +1,9 @@
 # 带背景登录页
 
-> [login.dart](../../demo/lib/pages/login.dart)
+> [login.dart](../../demo/lib/pages/login.dart)&nbsp;&nbsp;
+> [main.dart](../../demo/lib/main.dart)
 > 
-> 最后编辑时间：2024.10.13 18:38
+> 最后编辑时间：2024.10.15 10:51
 > 
 > ![img.png](12.png)
 

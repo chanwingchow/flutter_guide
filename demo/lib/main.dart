@@ -1,4 +1,4 @@
-import 'package:demo/pages/login.dart';
+import 'package:demo/pages/shopping.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
@@ -12,7 +12,7 @@ class App extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrangeAccent),
       ),
       debugShowCheckedModeBanner: false,
-      home: const LoginPage(),
+      home: const ShoppingPage(),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 /// 登录页
 class LoginPage extends StatelessWidget {
@@ -14,6 +15,9 @@ class LoginPage extends StatelessWidget {
     final idController = TextEditingController();
     // 密码
     final pwdController = TextEditingController();
+
+    // 已注册用户
+    final List<User> users = [];
 
     return Scaffold(
       body: Stack(
@@ -65,9 +69,10 @@ class LoginPage extends StatelessWidget {
                 children: [
                   // 取消按钮
                   FilledButton(
-                    onPressed: () {},
-                    // 调节按钮内边距，让按钮看起来大一点
-                    // 这里其实也可以将两个按钮提到函数里
+                    onPressed: () {
+                      // 加一个返回功能
+                      Navigator.pop(context);
+                    },
                     style: FilledButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                         vertical: 16,
@@ -82,7 +87,41 @@ class LoginPage extends StatelessWidget {
 
                   // 登录按钮
                   FilledButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (nameController.text.isEmpty) {
+                        Fluttertoast.showToast(msg: "姓名不能为空");
+                        return;
+                      } else if (!RegExp(r"^\d{11}$")
+                          .hasMatch(idController.text)) {
+                        Fluttertoast.showToast(msg: "学号是 11 位数字");
+                        return;
+                      } else if (pwdController.text.isEmpty) {
+                        Fluttertoast.showToast(msg: "密码不能为空");
+                        return;
+                      }
+
+                      // 检查用户是否已经注册
+                      for (var user in users) {
+                        // 找到注册用户
+                        if (user.id == int.parse(idController.text)) {
+                          if (user.name != nameController.text) {
+                            // 用户已经注册
+                            Fluttertoast.showToast(msg: "姓名错误");
+                            return;
+                          } else if (user.pwd != pwdController.text) {
+                            // 用户已经注册
+                            Fluttertoast.showToast(msg: "密码错误");
+                            return;
+                          } else {
+                            Fluttertoast.showToast(msg: "登录成功");
+                            Navigator.pop(context);
+                            return;
+                          }
+                        }
+                      }
+
+                      Fluttertoast.showToast(msg: "该用户未注册");
+                    },
                     style: FilledButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                         vertical: 16,
@@ -90,6 +129,53 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     child: const Text("登录"),
+                  ),
+
+                  // 水平空白间距
+                  const SizedBox(width: 30),
+
+                  // 注册按钮
+                  FilledButton(
+                    onPressed: () {
+                      if (nameController.text.isEmpty) {
+                        Fluttertoast.showToast(msg: "姓名不能为空");
+                        return;
+                      } else if (!RegExp(r"^\d{11}$")
+                          .hasMatch(idController.text)) {
+                        Fluttertoast.showToast(msg: "学号是 11 位数字");
+                        return;
+                      } else if (pwdController.text.isEmpty) {
+                        Fluttertoast.showToast(msg: "密码不能为空");
+                        return;
+                      }
+
+                      final id = int.parse(idController.text);
+                      // 检查用户是否已经注册
+                      for (var user in users) {
+                        if (user.id == id) {
+                          // 用户已经注册
+                          Fluttertoast.showToast(msg: "该用户已经注册过了");
+                          return;
+                        }
+                      }
+
+                      // 注册用户
+                      users.add(
+                        User(
+                          id: id,
+                          name: nameController.text,
+                          pwd: pwdController.text,
+                        ),
+                      );
+                      Fluttertoast.showToast(msg: "注册成功");
+                    },
+                    style: FilledButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 26,
+                      ),
+                    ),
+                    child: const Text("注册"),
                   ),
                 ],
               ),
@@ -127,4 +213,13 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+}
+
+/// 用户数据类
+class User {
+  final int id;
+  String name;
+  String pwd;
+
+  User({required this.id, required this.name, required this.pwd});
 }
