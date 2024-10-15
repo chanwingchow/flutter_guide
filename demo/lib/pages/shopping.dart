@@ -1,8 +1,32 @@
 import 'package:demo/pages/login.dart';
 import 'package:flutter/material.dart';
 
-class ShoppingPage extends StatelessWidget {
+// 需要继承自 StatefulWidget
+class ShoppingPage extends StatefulWidget {
   const ShoppingPage({super.key});
+
+  // 重写 createState 返回 _ShoppingPageState
+  @override
+  State<StatefulWidget> createState() => _ShoppingPageState();
+}
+
+class _ShoppingPageState extends State<ShoppingPage> with SingleTickerProviderStateMixin {
+  // 使用 late 标识改变量会在稍后初始化
+  // 在此处就可以不用初始化了
+  late TabController _tabController;
+  final _tabs = const [
+    Text("推荐"),
+    Text("你的"),
+    Text("别抄"),
+    Text("我的"),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    // 初始化 _tabController
+    _tabController = TabController(length: _tabs.length, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,66 +68,95 @@ class ShoppingPage extends StatelessWidget {
         },
         child: const Icon(Icons.login_outlined),
       ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        padding: const EdgeInsets.all(18),
-        mainAxisSpacing: 18,
-        crossAxisSpacing: 18,
-        childAspectRatio: 0.6,
-        children: List.generate(
-          24,
-          (index) {
-            final product = products[index % products.length];
-
-            return ClipRRect(
-              borderRadius: BorderRadius.circular(14),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14),
-                  color: Colors.white.withOpacity(0.5),
-                  border: Border.all(
-                    color: Colors.grey.withOpacity(0.5),
-                    width: 0.4,
-                  ),
+      body: Column(
+        children: [
+          // 搜索栏
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(40),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // 商品图片
-                    Expanded(
-                      child: Image.network(
-                        product.image,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                suffixIcon: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.search),
+                ),
+              ),
+            ),
+          ),
+          // 分类栏
+          TabBar(
+            controller: _tabController,
+            tabs: _tabs,
+          ),
 
-                    Padding(
-                      padding: const EdgeInsets.all(10),
+          // 外层加个 Expanded，不然会因为 GridView 无法确定高度而无法显示
+          Expanded(
+            // 这是旧的 GridView，里面内容都没有改
+            child: GridView.count(
+              crossAxisCount: 2,
+              padding: const EdgeInsets.all(18),
+              mainAxisSpacing: 18,
+              crossAxisSpacing: 18,
+              childAspectRatio: 0.6,
+              children: List.generate(
+                24,
+                (index) {
+                  final product = products[index % products.length];
+
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(14),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        color: Colors.white.withOpacity(0.5),
+                        border: Border.all(
+                          color: Colors.grey.withOpacity(0.5),
+                          width: 0.4,
+                        ),
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // 商品标题
-                          Text(
-                            product.title,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                          // 商品图片
+                          Expanded(
+                            child: Image.network(
+                              product.image,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                          const SizedBox(height: 5),
 
-                          // 商品价格
-                          Text(
-                            "￥${product.price}",
-                            style: const TextStyle(color: Colors.red),
+                          Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // 商品标题
+                                Text(
+                                  product.title,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 5),
+
+                                // 商品价格
+                                Text(
+                                  "￥${product.price}",
+                                  style: const TextStyle(color: Colors.red),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
-            );
-          },
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }
