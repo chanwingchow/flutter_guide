@@ -232,6 +232,7 @@ int sub(int a, int b) {
 }
 
 /// 当返回值类型为 void，即无返回值时，void 可省略
+/// 勘误：任何时候都可以省略返回值类型，此时返回值类型为 dynamic 即返回值可以是任何类型
 main() {
   int result = add(1, 1);
   print(result); // 2
