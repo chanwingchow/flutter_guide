@@ -5,7 +5,7 @@
 > [pubspec.yaml](../../demo/pubspec.yaml)&nbsp;&nbsp;
 > [main.dart](../../demo/lib/main.dart)
 >
-> 最后编辑时间：2024.10.15 22:24
+> 最后编辑时间：2024.10.26 11:09
 >
 > ![img.png](8.png)
 
@@ -875,11 +875,7 @@ class LoginPage extends StatelessWidget {
 
 今天（10.15）课上听了下作业要求，电商购物页面需要加一个 `TextField`（做输入框）和 `TabBar`（做分类栏）。
 
-说一下大致改的点：
-1. `ShoppingPage` 在这次改动中继承自 `StatefulWidget`（`TabBar` 需要），因为这个改动，`build` 会移动到 `_ShoppingPageState` 中。
-2. `_ShoppingPageState` 需要继承 `State<ShoppingPage>` 并且使用 `with`（类似实现）混合 `SingleTickerProviderStateMixin`。
-3. `GridView.count` 移动到 `Column` 里的 `Expanded` 中，同时在 `Column` 里添加了搜索框和分类栏。
-4. 因为分类栏 `TabBar` 的需要，要在 `_ShoppingPageState` 里给一个 `_tabController` 变量，重写初始化方法 `initState` 给它赋值。
+说一下大致改的点：`GridView.count` 移动到 `Column` 里的 `Expanded` 中，同时在 `Column` 里添加了搜索框和分类栏。
 
 ![img.png](9.png)
 
@@ -887,32 +883,15 @@ class LoginPage extends StatelessWidget {
 import 'package:demo/pages/login.dart';
 import 'package:flutter/material.dart';
 
-// 需要继承自 StatefulWidget
-class ShoppingPage extends StatefulWidget {
+class ShoppingPage extends StatelessWidget {
   const ShoppingPage({super.key});
 
-  // 重写 createState 返回 _ShoppingPageState
-  @override
-  State<StatefulWidget> createState() => _ShoppingPageState();
-}
-
-class _ShoppingPageState extends State<ShoppingPage> with SingleTickerProviderStateMixin {
-  // 使用 late 标识改变量会在稍后初始化
-  // 在此处就可以不用初始化了
-  late TabController _tabController;
   final _tabs = const [
     Text("推荐"),
     Text("你的"),
     Text("别抄"),
     Text("我的"),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    // 初始化 _tabController
-    _tabController = TabController(length: _tabs.length, vsync: this);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -922,25 +901,25 @@ class _ShoppingPageState extends State<ShoppingPage> with SingleTickerProviderSt
         title: "麦娅月沙发 实木沙发客厅家具 组合套装冬夏两用 小户型经济型木质沙发 配套长茶几【或茶水位】 普通海绵坐垫",
         price: 1300.00,
         image:
-            "https://img20.360buyimg.com/jdcms/s460x460_jfs/t1/132279/10/49135/233043/670a2ff6Fb833922e/e186a4a63a1434ad.jpg.webp",
+        "https://img20.360buyimg.com/jdcms/s460x460_jfs/t1/132279/10/49135/233043/670a2ff6Fb833922e/e186a4a63a1434ad.jpg.webp",
       ),
       _Product(
         title: "【已售百万+】商务腕表石英运动手表休闲皮带男士手表 黑色",
         price: 7.90,
         image:
-            "https://img13.360buyimg.com/jdcms/s460x460_jfs/t1/244923/20/20140/134761/67097ba7Ffff2592e/1a61cccf69a4ffc2.jpg.webp",
+        "https://img13.360buyimg.com/jdcms/s460x460_jfs/t1/244923/20/20140/134761/67097ba7Ffff2592e/1a61cccf69a4ffc2.jpg.webp",
       ),
       _Product(
         title: "华为HUAWEI  Pura 70  二手手机 羽砂黑 12G+512G",
         price: 4399.00,
         image:
-            "https://img30.360buyimg.com/jdcms/s460x460_jfs/t1/183571/14/44136/252723/662db7a9F09017346/ee50b5e22dd49354.png.webp",
+        "https://img30.360buyimg.com/jdcms/s460x460_jfs/t1/183571/14/44136/252723/662db7a9F09017346/ee50b5e22dd49354.png.webp",
       ),
       _Product(
         title: "美的电水壶热水壶大容量 家用烧水壶304不锈钢 双层防烫无缝内胆电热水壶 快速烧水 1.5L 1566",
         price: 59.00,
         image:
-            "https://img11.360buyimg.com/jdcms/s460x460_jfs/t1/180294/13/48977/127421/6705d921F3dc0b133/33b02070a97d85aa.jpg.webp",
+        "https://img11.360buyimg.com/jdcms/s460x460_jfs/t1/180294/13/48977/127421/6705d921F3dc0b133/33b02070a97d85aa.jpg.webp",
       ),
     ];
 
@@ -972,9 +951,11 @@ class _ShoppingPageState extends State<ShoppingPage> with SingleTickerProviderSt
             ),
           ),
           // 分类栏
-          TabBar(
-            controller: _tabController,
-            tabs: _tabs,
+          DefaultTabController(
+            length: _tabs.length,
+            child: TabBar(
+              tabs: _tabs,
+            ),
           ),
 
           // 外层加个 Expanded，不然会因为 GridView 无法确定高度而无法显示
@@ -988,7 +969,7 @@ class _ShoppingPageState extends State<ShoppingPage> with SingleTickerProviderSt
               childAspectRatio: 0.6,
               children: List.generate(
                 24,
-                (index) {
+                    (index) {
                   final product = products[index % products.length];
 
                   return ClipRRect(
@@ -1061,4 +1042,5 @@ class _Product {
 
   _Product({required this.title, required this.price, required this.image});
 }
+
 ```

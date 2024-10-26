@@ -1,32 +1,15 @@
 import 'package:demo/pages/login.dart';
 import 'package:flutter/material.dart';
 
-// 需要继承自 StatefulWidget
-class ShoppingPage extends StatefulWidget {
+class ShoppingPage extends StatelessWidget {
   const ShoppingPage({super.key});
 
-  // 重写 createState 返回 _ShoppingPageState
-  @override
-  State<StatefulWidget> createState() => _ShoppingPageState();
-}
-
-class _ShoppingPageState extends State<ShoppingPage> with SingleTickerProviderStateMixin {
-  // 使用 late 标识改变量会在稍后初始化
-  // 在此处就可以不用初始化了
-  late TabController _tabController;
   final _tabs = const [
     Text("推荐"),
     Text("你的"),
     Text("别抄"),
     Text("我的"),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    // 初始化 _tabController
-    _tabController = TabController(length: _tabs.length, vsync: this);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,9 +69,11 @@ class _ShoppingPageState extends State<ShoppingPage> with SingleTickerProviderSt
             ),
           ),
           // 分类栏
-          TabBar(
-            controller: _tabController,
-            tabs: _tabs,
+          DefaultTabController(
+            length: _tabs.length,
+            child: TabBar(
+              tabs: _tabs,
+            ),
           ),
 
           // 外层加个 Expanded，不然会因为 GridView 无法确定高度而无法显示
